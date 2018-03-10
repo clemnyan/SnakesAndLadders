@@ -7,15 +7,17 @@
 // Date		   : February 17, 2018
 //=================================================
 #include <iostream>
-#include <Board.h>
+#include "Board.h"
 
 using namespace std;
 
-void main(){
+int main(){
 
 	Board *board = new Board(5,5);
 
-/*
+	board -> printBoard();
+
+  /*
 	main_game game;
 	game.intro();
 	game.info_player();
@@ -23,5 +25,6 @@ void main(){
 
 	getch();
 	*/
+	return 0;
 }
 
