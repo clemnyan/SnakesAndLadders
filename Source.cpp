@@ -7,7 +7,7 @@
 // Date		   : February 17, 2018
 //=================================================
 #include <iostream>
-#include "Board.h"
+#include "utils/Board.h"
 
 using namespace std;
 
