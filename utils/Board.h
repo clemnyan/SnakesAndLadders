@@ -7,6 +7,9 @@
 // Date		   : February 17, 2018
 //=================================================
 
+/*Module to view the state of the game on an n*m
+ * grid as the game progresses
+ */
 #include <iostream>
 using namespace std;
 
@@ -30,11 +33,14 @@ public:
 	//constructor to make the board, will add snakes and players later
 	Board(int len, int wid);
 
-	//setters and getters
+	//getters
 	int getLength();
 	int getWidth();
-        void printBoard();
-	~Board();
+  //print the board
+  void printBoard();
+  // find number of digits in integer
+  int NumDigits(int x);
+  ~Board();
 
 };
 
