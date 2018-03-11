@@ -35,10 +35,9 @@ public:
   //setters
   int setLength(int x);  //set length of board
   int setWidth(int x);   //set width of the board
-//  int setSnakes(Snake *s [], int size) ;  //insert snakes into the board
-        //getters
-        int getLength();
-        int getWidth();
+  //getters
+  int getLength();
+  int getWidth();
   //print the board
   void printBoard();
   // find number of digits in integer
