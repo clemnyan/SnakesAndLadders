@@ -7,31 +7,51 @@
 //=================================================
 
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 #include "Board.h"
+#include "Snake.h"
 
 using namespace std;
 
 // constructs the board for the game
-Board :: Board(int len, int wid)
+Board :: Board(int len, int wid, Snake *snks [], int snksSize)
 {
   this -> length = len;
   this -> width = wid;
+  this -> snakes = (Snake **) calloc(1, sizeof(Snake **));
+  for (int i=0; i< snksSize; i++) {  //insert snakes into the board
+    this -> snakes[i] = new Snake(*snks[i]);  //using copy constructor
+  }
+  this -> numberofSnakes = snksSize;
 }
 
-// get the length of the board
-int Board:: getLength()
+int Board :: setLength(int x) {  //set length of board
+  this -> length = x;
+}
+
+int Board :: setWidth(int x) {   //set width of the board
+  this -> width = x;
+}
+
+/*
+int Board :: setSnakes(Snake *s[], int size) {
+  for (int i=0; i< size; i++) {  //insert snakes into the board
+    this -> snakes[i] = new Snake(*s[i]);  //using copy constructor
+  }
+} */
+
+int Board:: getLength()   // get the length of the board
 {
   return this -> length;
 }
 
-// get the width of the board
-int Board :: getWidth()
+int Board :: getWidth()  // get the width of the board
 {
   return this -> width;
 }
 
-// print the current state/view of the board
-void Board :: printBoard()
+void Board :: printBoard()  // print the current state/view of the board
 {
   int count = -1;  //prints column-walls for each i, j coordinates
   int len = 5* this -> length;
@@ -41,39 +61,13 @@ void Board :: printBoard()
     for (int j=0; j<wid; j++) {
       int m = j+1;
       if ((m % wid == 0) && ((i % 5) == 0)) {
-        count ++;
+        count ++;    //number of times i iterates 5 times (length)
       }
-
       if (i % 5 == 0) {
           cout << "#---------";   //print top row
       }
-      else {
-        if (i % 5 == 1) {
-          int val = (count*wid) + j+1;
-          int num = this -> NumDigits(val);
-          if (num == -1){ // Error case
-            cout << "Error: Out of limits for board size"<<endl;
-            exit(1);
-          }
-          if (num==1){
-            cout <<"#"<<val<<"        ";
-          }
-          else if (num==2){
-            cout <<"#"<<val<<"       ";
-          }
-          else {
-            cout <<"#"<<val<<"      ";
-          }
-       }
-       else if (i<5 && j==0 && (i == 3)){
-          cout <<"#  START  ";  //To denote start
-       }
-       else if (i>len -5  && j==wid -1 && (i ==(len-5+3))) {
-          cout <<"#   END   ";   //To denote the end
-       }
-       else {
-          cout << "#         ";   //print inner row
-       }
+      else {   //print other parts of the board in formatted structure
+        this -> printHelper (i, j, wid, count, len);
       }
     }
   cout <<"#\n";
@@ -82,8 +76,7 @@ void Board :: printBoard()
 
 /*Determine number of digits to help display integers in correct
   format on the board. The limit is up to 1000 */
-int Board :: NumDigits(int x)
-{
+int Board :: NumDigits(int x) {
     x = abs(x);
     return (x < 10 ? 1 :
         (x < 100 ? 2 :
@@ -91,8 +84,87 @@ int Board :: NumDigits(int x)
         -1)));
 }
 
+/* Helper function to print board with varios objects such as snakes, players */
+void Board :: printHelper (int i, int j, int wid, int count, int len) {
+  if (i % 5 == 1) {
+    //format top row to show box number
+    int val = (count*wid) + j+1;  //box number
+    int num = this -> NumDigits(val);
+    //For detecting snake locations
+    int smark = 0;  //to mark if snake is present in box
+    int indexs = 0; //to track index of the snake
+    for (int k=0; k<this -> numberofSnakes; k++) {
+      if (this -> snakes[k] -> get_start() == val ||
+        this -> snakes[k] -> get_end() == val) {
+          smark =1;
+          indexs = k;
+        }
+    }
+    if (num == -1){ // Error case
+      cout << "Error: Out of limits for board size"<<endl;
+      smark = 0;
+      exit(1);
+    }
+    if (num==1){  // box number only 1 digit
+      if (smark == 1) {  //if snake exists in this location
+         int numdig = this -> NumDigits(indexs);  //number of digits of snake index
+         if (numdig == 1){
+           cout <<"#"<<val<<"     S"<<indexs<<" ";
+         } else {   //Total number of snakes < 100 (constraint)
+           cout <<"#"<<val<<"    S"<<indexs<<" ";
+         }
+         smark = 0;  //reset marker
+      }
+      else {
+        cout <<"#"<<val<<"        ";
+      }
+    }
+    else if (num==2){
+      if (smark == 1) {  //if snake exists in this location
+         int numdig = this -> NumDigits(indexs);  //number of digits of snake index
+         if (numdig == 1){
+           cout <<"#"<<val<<"    S"<<indexs<<" ";
+         } else {   //Total number of snakes < 100 (constraint)
+           cout <<"#"<<val<<"   S"<<indexs<<" ";
+         }
+         smark = 0;  //reset marker
+      }
+      else {
+        cout <<"#"<<val<<"       ";
+      }
+    }
+    else {
+      if (smark == 1) {  //if snake exists in this location
+         int numdig = this -> NumDigits(indexs);  //number of digits of snake index
+         if (numdig == 1){
+           cout <<"#"<<val<<"   S"<<indexs<<" ";
+         } else {   //Total number of snakes < 100 (constraint)
+           cout <<"#"<<val<<"  S"<<indexs<<" ";
+         }
+         smark = 0;  //reset marker
+      }
+      else {
+        cout <<"#"<<val<<"      ";
+      }
+    }
+ }
+ else if (i<5 && j==0 && (i == 3)){
+    cout <<"#  START  ";  //To denote start
+ }
+ else if (i>len -5  && j==wid -1 && (i ==(len-5+3))) {
+    cout <<"#   END   ";   //To denote the end
+ }
+ else {
+    cout << "#         ";   //print inner rows
+ }
+}
 
+//destructor
 Board :: ~Board() {
-  // Nothing to destroy
+  //delete all the snakes
+  for (int i=0; i<this -> numberofSnakes; i++) {
+    delete(this -> snakes[i]);
+  }
+  delete(this -> snakes);
 }
 

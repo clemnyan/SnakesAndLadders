@@ -1,19 +1,22 @@
-//=================================================
-// Name        : Source.cpp
-// Author      : Anaqhelly Cisneros
-// Institution : Dartmouth College
-// School	   : Thayer School of Engineering
-// Description : Project 5 in C++
-// Date		   : February 17, 2018
-//=================================================
+/* Clement Nyanhongo
+ *
+ * Module with the driver Program
+ */
 #include <iostream>
 #include "utils/Board.h"
+#include "utils/Snake.h"
 
 using namespace std;
 
 int main(){
 
-	Board *board = new Board(5,5);
+  //Create snakes
+	Snake *snakes [3];
+	snakes[0] = new Snake(5,10);
+	snakes[1] = new Snake(9,20);
+	snakes[2] = new Snake(3, 70);
+	// Create the board
+	Board *board = new Board(10,10, snakes, 3);
 
 	board -> printBoard();
 
