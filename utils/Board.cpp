@@ -11,19 +11,26 @@
 #include <stdlib.h>
 #include "Board.h"
 #include "Snake.h"
+#include "Ladder.h"
 
 using namespace std;
 
 // constructs the board for the game
-Board :: Board(int len, int wid, Snake *snks [], int snksSize)
+Board :: Board(int len, int wid, Snake *snks [], Ladder *ldrs [],
+     int snksSize, int ldrsSize)
 {
   this -> length = len;
   this -> width = wid;
   this -> snakes = (Snake **) calloc(1, sizeof(Snake **));
+  this -> ladders = (Ladder **)calloc(1, sizeof(Ladder **));
   for (int i=0; i< snksSize; i++) {  //insert snakes into the board
     this -> snakes[i] = new Snake(*snks[i]);  //using copy constructor
   }
+  for (int i=0; i< ldrsSize; i++) {  //insert ladders into the board
+    this -> ladders[i] = new Ladder(*ldrs[i]);  //using copy constructor
+  }
   this -> numberofSnakes = snksSize;
+  this -> numberofLadders = ldrsSize;
 }
 
 int Board :: setLength(int x) {  //set length of board
@@ -33,13 +40,6 @@ int Board :: setLength(int x) {  //set length of board
 int Board :: setWidth(int x) {   //set width of the board
   this -> width = x;
 }
-
-/*
-int Board :: setSnakes(Snake *s[], int size) {
-  for (int i=0; i< size; i++) {  //insert snakes into the board
-    this -> snakes[i] = new Snake(*s[i]);  //using copy constructor
-  }
-} */
 
 int Board:: getLength()   // get the length of the board
 {
@@ -86,9 +86,8 @@ int Board :: NumDigits(int x) {
 
 /* Helper function to print board with varios objects such as snakes, players */
 void Board :: printHelper (int i, int j, int wid, int count, int len) {
-  if (i % 5 == 1) {
-    //format top row to show box number
-    int val = (count*wid) + j+1;  //box number
+  int val = (count*wid) + j+1;  //box number on board
+  if (i % 5 == 1) {  //first line of each box on grid
     int num = this -> NumDigits(val);
     //For detecting snake locations
     int smark = 0;  //to mark if snake is present in box
@@ -100,6 +99,7 @@ void Board :: printHelper (int i, int j, int wid, int count, int len) {
           indexs = k;
         }
     }
+
     if (num == -1){ // Error case
       cout << "Error: Out of limits for board size"<<endl;
       smark = 0;
@@ -148,10 +148,34 @@ void Board :: printHelper (int i, int j, int wid, int count, int len) {
       }
     }
  }
- else if (i<5 && j==0 && (i == 3)){
+ else if (i % 5 == 2) {  //second line of box on grid
+     //For detecting ladder locations
+     int smarl = 0;  //to mark if a ladder is present in box
+     int indexl = 0; //to track index of the ladder
+     for (int k=0; k<this -> numberofLadders; k++) {
+       if (this -> ladders[k] -> get_start() == val ||
+         this -> ladders[k] -> get_end() == val) {
+           smarl =1;
+           indexl = k;
+         }
+     }
+     if (smarl == 1) {  //if ladder exists in this location
+        int numdig = this -> NumDigits(indexl);  //digits in ladder index
+        if (numdig == 1){
+          cout <<"#      L"<<indexl<<" ";
+        } else {   //Total number of ladders < 100 (constraint)
+          cout <<"#     L"<<indexl<<" ";
+        }
+        smarl = 0;  //reset marker
+       }
+     else {
+         cout <<"#         ";
+       }
+ }
+ else if (j==0 && (i == 3)){
     cout <<"#  START  ";  //To denote start
  }
- else if (i>len -5  && j==wid -1 && (i ==(len-5+3))) {
+ else if (j==wid -1 && (i ==(len-5+3))) {
     cout <<"#   END   ";   //To denote the end
  }
  else {

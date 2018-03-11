@@ -12,6 +12,7 @@
  */
 #include <iostream>
 #include "Snake.h"
+#include "Ladder.h"
 using namespace std;
 
 
@@ -24,21 +25,22 @@ private:
   int length;   //The length of the board
   int width;    //The width of the board
   Snake **snakes;      //Snakes in the game
+  Ladder ** ladders;   //ladders in the game
   int numberofSnakes;    //Number of Snakes
+  int numberofLadders;   //Number of Ladders
   /*
-  Ladders ladders []
   Players players []
   */
 public:
   //constructor to make the board, will add snakes and players later
-  Board(int len, int wid, Snake *snks [], int snksSize);
+  Board(int len, int wid, Snake *snks [],Ladder *ldrs [],
+     int snksSize, int numberofLadders);
   //setters
   int setLength(int x);  //set length of board
   int setWidth(int x);   //set width of the board
-//  int setSnakes(Snake *s [], int size) ;  //insert snakes into the board
-        //getters
-        int getLength();
-        int getWidth();
+  //getters
+  int getLength();
+  int getWidth();
   //print the board
   void printBoard();
   // find number of digits in integer
