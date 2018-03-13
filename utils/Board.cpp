@@ -86,7 +86,7 @@ int Board :: NumDigits(int x) {
 
 /* Helper function to print board with varios objects such as snakes, players */
 void Board :: printHelper (int i, int j, int wid, int count, int len) {
-  int val = (count*wid) + j+1;  //box number on board
+  int val =(count*wid) + j+1;  //box number on board
   if (i % 5 == 1) {  //first line of each box on grid
     int num = this -> NumDigits(val);
     //For detecting snake locations
@@ -173,10 +173,12 @@ void Board :: printHelper (int i, int j, int wid, int count, int len) {
        }
  }
  else if (j==0 && (i == 3)){
-    cout <<"#  START  ";  //To denote start
+    //To denote start
+    cout <<"#   END   ";   //To denote the end
  }
  else if (j==wid -1 && (i ==(len-5+3))) {
-    cout <<"#   END   ";   //To denote the end
+    cout <<"#  START  ";  //To denote start
+
  }
  else {
     cout << "#         ";   //print inner rows
