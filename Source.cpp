@@ -6,6 +6,7 @@
 #include "utils/Board.h"
 #include "utils/Snake.h"
 #include "utils/Ladder.h"
+#include "utils/Dice.h"
 
 using namespace std;
 
@@ -26,6 +27,20 @@ int main(){
 	Board *board = new Board(10,10, snakes, ladders,  3, 3);
 
 	board -> printBoard();
+
+  Dice *die = new Dice();
+	cout << "Player 1 roll die"<<endl;
+	die -> roll_dice();
+	cout << die -> gets_value()<<endl;
+	die -> resetDice();
+	cout << "Player 2 roll die"<<endl;
+	die -> roll_dice();
+	cout << die -> gets_value()<<endl;
+	die -> resetDice();
+	cout << "Player 3 roll die"<<endl;
+	die -> roll_dice();
+	cout << die -> gets_value()<<endl;
+	die -> resetDice();
 
   /*
 	main_game game;
