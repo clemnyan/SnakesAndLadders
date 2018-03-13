@@ -86,7 +86,7 @@ int Board :: NumDigits(int x) {
 
 /* Helper function to print board with varios objects such as snakes, players */
 void Board :: printHelper (int i, int j, int wid, int count, int len) {
-  int val = (count*wid) + j+1;  //box number on board
+  int val = (width * length- j)-(count*wid); //box number on board
   if (i % 5 == 1) {  //first line of each box on grid
     int num = this -> NumDigits(val);
     //For detecting snake locations
