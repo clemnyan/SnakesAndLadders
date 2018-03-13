@@ -7,6 +7,7 @@
 #include "utils/Snake.h"
 #include "utils/Ladder.h"
 #include "utils/Dice.h"
+#include "utils/Player.h"
 
 using namespace std;
 
@@ -28,19 +29,9 @@ int main(){
 
 	board -> printBoard();
 
-  Dice *die = new Dice();
-	cout << "Player 1 roll die"<<endl;
-	die -> roll_dice();
-	cout << die -> gets_value()<<endl;
-	die -> resetDice();
-	cout << "Player 2 roll die"<<endl;
-	die -> roll_dice();
-	cout << die -> gets_value()<<endl;
-	die -> resetDice();
-	cout << "Player 3 roll die"<<endl;
-	die -> roll_dice();
-	cout << die -> gets_value()<<endl;
-	die -> resetDice();
+	Player * player1 = new Player ("Clement", 1);
+
+	player1 -> roll();
 
   /*
 	main_game game;
