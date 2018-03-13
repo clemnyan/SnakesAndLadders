@@ -33,11 +33,11 @@ Board :: Board(int len, int wid, Snake *snks [], Ladder *ldrs [],
   this -> numberofLadders = ldrsSize;
 }
 
-int Board :: setLength(int x) {  //set length of board
+void Board :: setLength(int x) {  //set length of board
   this -> length = x;
 }
 
-int Board :: setWidth(int x) {   //set width of the board
+void Board :: setWidth(int x) {   //set width of the board
   this -> width = x;
 }
 

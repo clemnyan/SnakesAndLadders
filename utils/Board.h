@@ -36,8 +36,8 @@ public:
   Board(int len, int wid, Snake *snks [],Ladder *ldrs [],
      int snksSize, int numberofLadders);
   //setters
-  int setLength(int x);  //set length of board
-  int setWidth(int x);   //set width of the board
+  void setLength(int x);  //set length of board
+  void setWidth(int x);   //set width of the board
   //getters
   int getLength();
   int getWidth();
