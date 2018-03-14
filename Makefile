@@ -29,5 +29,5 @@ Game.o: utils/Game.cpp
 	g++ -c utils/Game.cpp
 
 clean:
-	rm *.o startGame
+	rm *.o startGame utils/*.o
 
