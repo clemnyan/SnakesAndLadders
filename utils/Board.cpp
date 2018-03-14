@@ -173,10 +173,10 @@ void Board :: printHelper (int i, int j, int wid, int count, int len) {
        }
  }
  else if (j==0 && (i == 3)){
-    cout <<"#  START  ";  //To denote start
+   cout <<"#   END   ";   //To denote the end
  }
  else if (j==wid -1 && (i ==(len-5+3))) {
-    cout <<"#   END   ";   //To denote the end
+   cout <<"#  START  ";  //To denote start
  }
  else {
     cout << "#         ";   //print inner rows
@@ -190,4 +190,10 @@ Board :: ~Board() {
     delete(this -> snakes[i]);
   }
   delete(this -> snakes);
+  //delete all the ladders
+  for (int i=0; i<this -> numberofLadders; i++) {
+    delete(this -> ladders[i]);
+  }
+  delete(this -> ladders);
 }
+

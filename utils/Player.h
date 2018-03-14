@@ -21,27 +21,23 @@
 
 using namespace std;
 
-class Player{
+class Player {
 private:
 	string player_name;
 	int player_number;
 	int score;
-	int location;
 	Dice *die;
 
 public:
 	Player();    //default constructor for a Player
 	Player(string name, int num);  // constructor with Parameters
-  void modify_location(int k);
 	//getters
-	void set_location(int k);   //location on board (grid) for the Player
 	void set_name(string name);
 	void set_player_number(int n);
 	void set_score(int m);
 	//setters
 	string get_name();
 	int get_player_number();
-	int get_location();
 	int get_score();
 	//roll Dice
 	int roll ();

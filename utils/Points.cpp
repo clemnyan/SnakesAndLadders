@@ -1,4 +1,4 @@
-/* Points.cpp
+ /*  Points.cpp
 
  * Clement Nyanhongo
 
@@ -7,86 +7,84 @@
  */
 
 #include <iostream>
+#include "Points.h"
 using namespace std;
+
+Points :: Points(){
+   S1 = NULL;
+   S2 = NULL;
+   L1 = NULL;
+   L2 = NULL;
+}
 
 //constructor for board coordinates based on the difficulty level
 Points :: Points(int x) {
-  if (x == 0) {    // small level
-    S1 = new int [2];
-    S2 = new int [2];
-    sS1 = new int [3];
-    sS2 = new int [3];
-    L1 = new int [4];
-    L2 = new int [4];
-    sL1 = new int [4];
-    sL2 = new int [4];
-    // populate coordinates for small ladders
-    sL1 = {3, 23, 35, 45};
-    sL2 = {7, 27, 38, 48};
-    // populate coordinates for large Ladders
-    L1 = {9, 17, 8, 26};
-    L2 = {29, 39,31, 42};
-    // populate coordinates for small snakes
-    sS1 = {6, 16, 43};
-    sS2 = {2, 11, 37};
-    // populate coordinates for large snakes
-    S1 = {49, 41};
-    S2 = {29, 31};
+  if (x == 0) {    // lowest level
+    S1 = new int [6];
+    S2 = new int [6];
+    L1 = new int [8];
+    L2 = new int [8];
+    // populate coordinates for ladders
+    int x[8] = {3, 23, 35, 45, 9, 17, 8, 26};
+    int y[8] = {7, 27, 38, 48, 29, 39,31, 42};
+    for (int i=0; i<8; i++) {
+      L1[i]=x[i];
+      L2[i]=y[i];
+    }
+    // populate coordinates for snakes
+    int x2[6] = {6, 16, 43, 46, 41, 10};
+    int y2[6] = {2, 11, 37, 28, 33, 15};
+    for (int i=0; i<6; i++) {
+      S1[i]=x2[i];
+      S2[i]=y2[i];
+    }
   }
   else if (x == 1) {  // intermediate level maze
-    S1 = new int [4];
-    S2 = new int [4];
-    sS1 = new int [4];
-    sS2 = new int [4];
-    L1 = new int [3];
-    L2 = new int [3];
-    sL1 = new int [3];
-    sL2 = new int [3];
-    // populate coordinates for small ladders
-    sL1 = {83, 55, 75};
-    sL2 = {87, 58, 78};
-    // populate coordinates for large Ladders
-    L1 = {9, 17, 26};
-    L2 = {29, 59, 70 };
-    // populate coordinates for small snakes
-    sS1 = {66, 16, 73, 98};
-    sS2 = {62, 11, 68, 95};
-    // populate coordinates for large snakes
-    S1 = {99, 90, 80, 23 };
-    S2 = {57, 61, 43, 5};
+    S1 = new int [8];
+    S2 = new int [8];
+    L1 = new int [6];
+    L2 = new int [6];
+    // populate coordinates for ladders
+    int x [6] = {83, 55, 75, 9, 17, 26};
+    int y [6] = {87, 58, 78, 29, 59, 70};
+    for (int i= 0; i< 6; i++) {
+      L1[i]= x[i];
+      L2[i]= y[i];
+    }
+    // populate coordinates for snakes
+    int x2 [8] = {66, 16, 73, 98, 99, 90, 80, 23};
+    int y2 [8] = {62, 11, 68, 95, 57, 61, 43, 5};
+    for (int i= 0; i< 8; i++) {
+      S1[i]= x2[i];
+      S2[i]= y2[i];
+    }
   }
   else {    // highest level
-    S1 = new int [5];
-    S2 = new int [5];
-    sS1 = new int [10];
-    sS2 = new int [10];
-    sL1 = new int [5];
-    sL2 = new int [5];
-    L1 = new int [4];
-    L2 = new int [4];
+    S1 = new int [15];
+    S2 = new int [15];
+    L1 = new int [9];
+    L2 = new int [9];
     // populate coordinates for small snakes
-    sS1 = {87, 58, 78, 93, 10};
-    sS2 = {83, 55, 75, 88, 5};
-    // populate coordinates for large snakes
-    S1 = {129, 59, 100, 132, 67, 148, 91, 120, 143,95};
-    S2 = {109, 17, 36, 69, 47, 63, 72, 61, 4, 19};
+    int x [15] = {87, 58, 78, 93, 10, 129, 59, 100, 132, 67, 148, 91, 120, 143,95};
+    int y [15] = {83, 55, 75, 88, 5, 109, 17, 36, 69, 47, 63, 72, 61, 4, 19};
+    for (int i= 0; i< 15; i++) {
+      S1[i]= x[i];
+      S2[i]= y[i];
+    }
     // populate coordinates for small ladders
-    sL1 = {62, 11, 68, 135, 115};
-    sL2 = {66, 16, 73, 139, 121};
-    // populate coordinates for large ladders
-    L1 = {57, 66, 43, 5};
-    L2 = {119, 90, 103, 95};
+    int x2 [9] = {62, 11, 68, 135, 115, 57, 66, 43, 5};
+    int y2 [9] = {66, 16, 73, 139, 121, 119, 90, 103, 95};
+    for (int i= 0; i< 9; i++) {
+      L1[i]= x2[i];
+      L2[i]= y2[i];
+    }
     }
   }
 
   Points :: ~Points(){
     delete(S1);
     delete(S2);
-    delete(sS1);
-    delete(sS2);
     delete(L1);
     delete(L2);
-    delete(sL1);
-    delete(sL2);
   }
 

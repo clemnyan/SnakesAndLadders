@@ -15,13 +15,10 @@ class Points{
   // Coordinates for the board (start, end points)
   int * S1;
   int * S2;
-  int * sS1;
-  int * sS2;
   int * L1;
   int * L2;
-  int * sL1;
-  int * sL2;
   //constructor for board coordinates based on the difficulty level
+  Points();
   Points(int x);
   ~Points();
 };
