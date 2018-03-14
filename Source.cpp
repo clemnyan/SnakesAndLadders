@@ -25,6 +25,9 @@ int main(){
     g1 ->Play_Game();
 	}
 
+	g1 -> Play_Game();  //to print winners
+	delete(g1); //destructor
+
 	return 0;
 }
 

@@ -11,8 +11,6 @@
  * grid as the game progresses
  */
 #include <iostream>
-#include "Snake.h"
-#include "Ladder.h"
 using namespace std;
 
 
@@ -24,17 +22,10 @@ class Board {
 private:
   int length;   //The length of the board
   int width;    //The width of the board
-  Snake **snakes;      //Snakes in the game
-  Ladder ** ladders;   //ladders in the game
-  int numberofSnakes;    //Number of Snakes
-  int numberofLadders;   //Number of Ladders
-  /*
-  Players players []
-  */
+
 public:
   //constructor to make the board, will add snakes and players later
-  Board(int len, int wid, Snake *snks [],Ladder *ldrs [],
-     int snksSize, int numberofLadders);
+  Board(int len, int wid);
   //setters
   void setLength(int x);  //set length of board
   void setWidth(int x);   //set width of the board

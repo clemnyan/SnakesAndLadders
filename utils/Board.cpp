@@ -16,21 +16,10 @@
 using namespace std;
 
 // constructs the board for the game
-Board :: Board(int len, int wid, Snake *snks [], Ladder *ldrs [],
-     int snksSize, int ldrsSize)
+Board :: Board(int len, int wid)
 {
   this -> length = len;
   this -> width = wid;
-  this -> snakes = (Snake **) calloc(1, sizeof(Snake **));
-  this -> ladders = (Ladder **)calloc(1, sizeof(Ladder **));
-  for (int i=0; i< snksSize; i++) {  //insert snakes into the board
-    this -> snakes[i] = new Snake(*snks[i]);  //using copy constructor
-  }
-  for (int i=0; i< ldrsSize; i++) {  //insert ladders into the board
-    this -> ladders[i] = new Ladder(*ldrs[i]);  //using copy constructor
-  }
-  this -> numberofSnakes = snksSize;
-  this -> numberofLadders = ldrsSize;
 }
 
 void Board :: setLength(int x) {  //set length of board
@@ -84,93 +73,24 @@ int Board :: NumDigits(int x) {
         -1)));
 }
 
-/* Helper function to print board with varios objects such as snakes, players */
+/* Helper function to print board */
 void Board :: printHelper (int i, int j, int wid, int count, int len) {
   int val = (width * length- j)-(count*wid); //box number on board
   if (i % 5 == 1) {  //first line of each box on grid
     int num = this -> NumDigits(val);
-    //For detecting snake locations
-    int smark = 0;  //to mark if snake is present in box
-    int indexs = 0; //to track index of the snake
-    for (int k=0; k<this -> numberofSnakes; k++) {
-      if (this -> snakes[k] -> get_start() == val ||
-        this -> snakes[k] -> get_end() == val) {
-          smark =1;
-          indexs = k;
-        }
-    }
-
     if (num == -1){ // Error case
       cout << "Error: Out of limits for board size"<<endl;
-      smark = 0;
       exit(1);
     }
     if (num==1){  // box number only 1 digit
-      if (smark == 1) {  //if snake exists in this location
-         int numdig = this -> NumDigits(indexs);  //number of digits of snake index
-         if (numdig == 1){
-           cout <<"#"<<val<<"     S"<<indexs<<" ";
-         } else {   //Total number of snakes < 100 (constraint)
-           cout <<"#"<<val<<"    S"<<indexs<<" ";
-         }
-         smark = 0;  //reset marker
-      }
-      else {
         cout <<"#"<<val<<"        ";
-      }
     }
     else if (num==2){
-      if (smark == 1) {  //if snake exists in this location
-         int numdig = this -> NumDigits(indexs);  //number of digits of snake index
-         if (numdig == 1){
-           cout <<"#"<<val<<"    S"<<indexs<<" ";
-         } else {   //Total number of snakes < 100 (constraint)
-           cout <<"#"<<val<<"   S"<<indexs<<" ";
-         }
-         smark = 0;  //reset marker
-      }
-      else {
         cout <<"#"<<val<<"       ";
-      }
     }
     else {
-      if (smark == 1) {  //if snake exists in this location
-         int numdig = this -> NumDigits(indexs);  //number of digits of snake index
-         if (numdig == 1){
-           cout <<"#"<<val<<"   S"<<indexs<<" ";
-         } else {   //Total number of snakes < 100 (constraint)
-           cout <<"#"<<val<<"  S"<<indexs<<" ";
-         }
-         smark = 0;  //reset marker
-      }
-      else {
-        cout <<"#"<<val<<"      ";
-      }
+       cout <<"#"<<val<<"      ";
     }
- }
- else if (i % 5 == 2) {  //second line of box on grid
-     //For detecting ladder locations
-     int smarl = 0;  //to mark if a ladder is present in box
-     int indexl = 0; //to track index of the ladder
-     for (int k=0; k<this -> numberofLadders; k++) {
-       if (this -> ladders[k] -> get_start() == val ||
-         this -> ladders[k] -> get_end() == val) {
-           smarl =1;
-           indexl = k;
-         }
-     }
-     if (smarl == 1) {  //if ladder exists in this location
-        int numdig = this -> NumDigits(indexl);  //digits in ladder index
-        if (numdig == 1){
-          cout <<"#      L"<<indexl<<" ";
-        } else {   //Total number of ladders < 100 (constraint)
-          cout <<"#     L"<<indexl<<" ";
-        }
-        smarl = 0;  //reset marker
-       }
-     else {
-         cout <<"#         ";
-       }
  }
  else if (j==0 && (i == 3)){
    cout <<"#   END   ";   //To denote the end
@@ -185,15 +105,5 @@ void Board :: printHelper (int i, int j, int wid, int count, int len) {
 
 //destructor
 Board :: ~Board() {
-  //delete all the snakes
-  for (int i=0; i<this -> numberofSnakes; i++) {
-    delete(this -> snakes[i]);
-  }
-  delete(this -> snakes);
-  //delete all the ladders
-  for (int i=0; i<this -> numberofLadders; i++) {
-    delete(this -> ladders[i]);
-  }
-  delete(this -> ladders);
 }
 

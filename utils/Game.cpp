@@ -26,6 +26,22 @@ Main_Game :: Main_Game() {
 //Method to play the game
 void Main_Game :: Play_Game (){
 
+	 //print snake locations
+   cout<<"SNAKE LOCATIONS ON BOARD"<<endl;
+	 for (int i=0; i<numOfSnakes; i++){
+		 cout<<"("<<this ->snakes[i] -> get_start()<<",";
+		 cout<<this -> snakes[i] ->get_end()<<") ";
+	 }
+	 cout <<endl;
+
+	 //print ladder locations
+	 cout<<"LADDER LOCATIONS ON BOARD"<<endl;
+	 for (int i=0; i<numOfLadders; i++){
+		 cout<<"("<<this ->ladders[i] -> get_start()<<",";
+		 cout<<this -> ladders[i] ->get_end()<<") ";
+	 }
+	 cout <<endl;
+
    if (isComplete() == 1) {
 		 cout << "\nGame over!" <<endl;
      //display the player who just won the game
@@ -164,20 +180,20 @@ void Main_Game :: game_Init() {
     numOfSnakes = 5;
     numOfLadders = 8;
 	  fillSnakesLadders(this -> difficulty);
-    this ->board = new Board(5, 10, this -> snakes, this -> ladders,5,8);
+    this ->board = new Board(5, 10);
    }
    else if (this -> difficulty == 2) {  // intermediate difficulty
      numOfSnakes = 8;
      numOfLadders = 6;
 		 fillSnakesLadders(this -> difficulty);
-		 this ->board = new Board(10, 10, this -> snakes, this -> ladders,8,6);
+		 this ->board = new Board(10, 10);
 
    }
    else { //highest difficulty
      numOfSnakes = 15;
      numOfLadders = 9;
 		 fillSnakesLadders(this -> difficulty);
-		 this ->board = new Board(10, 15, this -> snakes, this -> ladders,15,9);
+		 this ->board = new Board(10, 15);
    }
 
 }
