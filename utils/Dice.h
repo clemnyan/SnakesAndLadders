@@ -16,14 +16,14 @@ using namespace std;
 #define DICE_H
 
 class Dice{
-	private:
-		int value;
-	public:
-		Dice();
-		void roll_dice();  //roll the dice
-		int gets_value();   // get value after rolling
-		void resetDice ();   // reset the dice
-	  ~Dice();  //destructor
+  private:
+    int value;
+  public:
+    Dice();
+    void roll_dice();  //roll the dice
+    int gets_value();   // get value after rolling
+    void resetDice ();   // reset the dice
+    ~Dice();  //destructor
 };
 
 #endif
